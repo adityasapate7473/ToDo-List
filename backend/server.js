@@ -30,6 +30,11 @@ taskSchema.pre('findOneAndUpdate', function (next) {
 
 const Task = mongoose.model('Task', taskSchema);
 
+
+app.use("/",(req,res)=>{
+    res.send("Server is Running");
+});
+
 // REST APIs
 app.get('/tasks', async (req, res) => {
     const { priority, userId } = req.query; // Get priority and userId from query parameters
