@@ -1,0 +1,329 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+  background-color: #f4f4f9;
+  margin: 10px;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.app-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #D9A7C7, #F1C6A1);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.app-container h1 {
+  font-size: 2.5rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Add Task Section */
+.add-task-container {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: space-between;
+  gap: 10px; /* Add spacing between child elements */
+  margin-bottom: 20px;
+  background-color: #f9e6f2;
+  padding: 10px;
+  border-radius: 10px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.add-task-container input {
+  flex: 1; /* Allow the input field to take up available space */
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid #d9a7c7;
+  min-width: 200px; /* Prevent input from shrinking too much */
+}
+
+.priority-select {
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #d9a7c7;
+  min-width: 120px; /* Ensure dropdown has a consistent size */
+}
+
+.add-task-container button {
+  padding: 12px 20px;
+  background-color: #f1c6a1;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 100px; /* Consistent button width */
+}
+
+.add-task-container button:hover {
+  background-color: #f1a7b7;
+}
+
+
+/* Search and Filter Section */
+.search-filter-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background-color: #f9e6f2;
+  padding: 10px;
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+.search-filter-container input {
+  width: 83%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  font-size: 16px;
+}
+
+.priority-filter {
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  font-size: 16px;
+}
+
+.task-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.task-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: calc(35% - 30px); /* Adjust width to fit 4 cards per row */
+  box-sizing: border-box;
+  transition: transform 0.3s;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+}
+
+.task-title {
+  font-size: 18px;
+  margin: 0 0 10px;
+}
+
+.task-title.completed {
+  text-decoration: line-through;
+  color: #bbb;
+}
+
+.task-priority {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.task-date {
+  margin: 5px 0 10px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.task-actions button {
+  margin-right: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.task-actions button:hover {
+  opacity: 0.9;
+}
+
+.task-actions button.delete {
+  background-color: #dc3545;
+}
+
+.task-actions button:not(.delete) {
+  background-color: #28a745;
+}
+
+.low {
+  border-left: 4px solid #28a745;
+}
+
+.medium {
+  border-left: 4px solid #ff9f00;
+}
+
+.high {
+  border-left: 4px solid #dc3545;
+}
+
+@media (max-width: 1024px) {
+  .task-card {
+    width: calc(33.33% - 20px); /* Fit 3 cards per row */
+  }
+}
+
+@media (max-width: 768px) {
+  .task-card {
+    width: calc(50% - 20px); /* Fit 2 cards per row */
+  }
+}
+
+@media (max-width: 480px) {
+  .task-card {
+    width: 100%; /* Full-width cards for small screens */
+  }
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #bbb;
+}
+
+/* Editing Task Styling */
+.editing-task {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s;
+  margin-bottom: 20px; /* Space between editing tasks */
+}
+
+.editing-task:hover {
+  transform: translateY(-5px); /* Add hover effect */
+}
+
+.editing-task input[type="text"],
+.editing-task select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 2px solid #ddd;
+  font-size: 14px;
+}
+
+.editing-task button {
+  padding: 10px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 100px;
+  margin-right: 10px;
+}
+
+.editing-task button.delete {
+  background-color: #f44336; /* Red for cancel */
+}
+
+.editing-task button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.editing-task button.delete:hover {
+  background-color: #e53935; /* Darker red on hover */
+}
+
+/* Responsive Styling for Editing Task */
+@media (max-width: 1024px) {
+  .editing-task {
+    width: calc(33.33% - 20px); /* Fit 3 editing tasks per row */
+  }
+}
+
+@media (max-width: 768px) {
+  .editing-task {
+    width: calc(50% - 20px); /* Fit 2 editing tasks per row */
+  }
+}
+
+@media (max-width: 480px) {
+  .editing-task {
+    width: 100%; /* Full-width for smaller screens */
+  }
+}
+
+
+/* Floating Icons */
+.floating-icon {
+  position: absolute;
+  width: 50px; /* Adjust icon size */
+  height: 50px;
+  opacity: 0.15; /* Make it semi-transparent */
+  animation: float 6s infinite ease-in-out; /* Floating animation */
+}
+
+.floating-icon:nth-child(1) {
+  top: 5%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.floating-icon:nth-child(2) {
+  top: 15%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+.floating-icon:nth-child(3) {
+  bottom: 20%;
+  left: 20%;
+  animation-delay: 2s;
+}
+
+.floating-icon:nth-child(4) {
+  bottom: 10%;
+  right: 25%;
+  animation-delay: 3s;
+}
+
+.floating-icon:nth-child(5) {
+  top: 35%;
+  left: 5%;
+  animation-delay: 4s;
+}
+
+.floating-icon:nth-child(6) {
+  top: 50%;
+  right: 20%;
+  animation-delay: 5s;
+}
+
+.floating-icon:nth-child(7) {
+  bottom: 5%;
+  left: 50%;
+  animation-delay: 6s;
+}
+
+.floating-icon:nth-child(8) {
+  top: 60%;
+  right: 5%;
+  animation-delay: 7s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px); /* Floating up and down */
+  }
+}
