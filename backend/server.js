@@ -36,7 +36,7 @@ app.use("/",(req,res)=>{
 });
 
 // REST APIs
-app.get('/tasks', async (req, res) => {
+app.get(`${API_BASE_URL}/tasks`, async (req, res) => {
     const { priority, userId } = req.query; // Get priority and userId from query parameters
     if (!userId) {
         return res.status(400).json({ error: 'User ID is required' });
@@ -49,7 +49,7 @@ app.get('/tasks', async (req, res) => {
     res.json(tasks);
 });
 
-app.post('/tasks', async (req, res) => {
+app.post(`${API_BASE_URL}/tasks`, async (req, res) => {
     const { title, priority, userId } = req.body; // Include userId in the task creation
     if (!userId) {
         return res.status(400).json({ error: 'User ID is required' });
@@ -59,7 +59,7 @@ app.post('/tasks', async (req, res) => {
     res.status(201).json(newTask);
 });
 
-app.put('/tasks/:id', async (req, res) => {
+app.put(`${API_BASE_URL}/tasks/:id`, async (req, res) => {
     const { id } = req.params;
     const { title, completed, priority } = req.body;
     const updatedTask = await Task.findByIdAndUpdate(
@@ -70,7 +70,7 @@ app.put('/tasks/:id', async (req, res) => {
     res.json(updatedTask);
 });
 
-app.delete('/tasks/:id', async (req, res) => {
+app.delete(`${API_BASE_URL}/tasks/:id`, async (req, res) => {
     const { id } = req.params;
     await Task.findByIdAndDelete(id);
     res.status(204).send();

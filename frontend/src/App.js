@@ -21,6 +21,7 @@ function App() {
     if (!userId) {
       userId = uuidv4(); // Generate a new unique ID
       localStorage.setItem('userId', userId);
+      
     }
   }, []);
 
@@ -85,36 +86,39 @@ function App() {
     setEditingTask(null);
   };
 
-  const filteredTasks = tasks.filter((task) =>
-    task.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTasks = Array.isArray(tasks)
+    ? tasks.filter((task) =>
+      task.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    : [];
+
 
   return (
     <div className="app-container">
       <div class="floating-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Icon 1" />
-</div>
-<div class="floating-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828969.png" alt="Icon 2" />
-</div>
-<div class="floating-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828971.png" alt="Icon 3" />
-</div>
-<div class="floating-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828973.png" alt="Icon 4" />
-</div>
-<div class="floating-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828981.png" alt="Icon 5" />
-</div>
-<div class="floating-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828979.png" alt="Icon 6" />
-</div>
-<div class="floating-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828967.png" alt="Icon 7" />
-</div>
-<div class="floating-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828974.png" alt="Icon 8" />
-</div>
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Icon 1" />
+      </div>
+      <div class="floating-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828969.png" alt="Icon 2" />
+      </div>
+      <div class="floating-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828971.png" alt="Icon 3" />
+      </div>
+      <div class="floating-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828973.png" alt="Icon 4" />
+      </div>
+      <div class="floating-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828981.png" alt="Icon 5" />
+      </div>
+      <div class="floating-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828979.png" alt="Icon 6" />
+      </div>
+      <div class="floating-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828967.png" alt="Icon 7" />
+      </div>
+      <div class="floating-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828974.png" alt="Icon 8" />
+      </div>
 
       <h1>To-Do List</h1>
 
