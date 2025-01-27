@@ -8,6 +8,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// API Base URL
+const API_BASE_URL = '/api';
+
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/todo-app', {
     useNewUrlParser: true,
@@ -30,11 +33,6 @@ taskSchema.pre('findOneAndUpdate', function (next) {
 
 const Task = mongoose.model('Task', taskSchema);
 
-
-app.use("/",(req,res)=>{
-    res.send("Server is Running");
-});
-
 // REST APIs
 app.get(`${API_BASE_URL}/tasks`, async (req, res) => {
     const { priority, userId } = req.query; // Get priority and userId from query parameters
@@ -45,35 +43,59 @@ app.get(`${API_BASE_URL}/tasks`, async (req, res) => {
     const filter = { userId }; // Filter tasks by userId
     if (priority) filter.priority = priority;
 
-    const tasks = await Task.find(filter).sort({ createdAt: -1 });
-    res.json(tasks);
+    try {
+        const tasks = await Task.find(filter).sort({ createdAt: -1 });
+        res.json(tasks);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch tasks' });
+    }
 });
 
 app.post(`${API_BASE_URL}/tasks`, async (req, res) => {
-    const { title, priority, userId } = req.body; // Include userId in the task creation
+    const { title, priority, userId } = req.body;
     if (!userId) {
         return res.status(400).json({ error: 'User ID is required' });
     }
-    const newTask = new Task({ title, priority, userId }); // Save userId with the task
-    await newTask.save();
-    res.status(201).json(newTask);
+    const newTask = new Task({ title, priority, userId });
+
+    try {
+        await newTask.save();
+        res.status(201).json(newTask);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create task' });
+    }
 });
 
 app.put(`${API_BASE_URL}/tasks/:id`, async (req, res) => {
     const { id } = req.params;
     const { title, completed, priority } = req.body;
-    const updatedTask = await Task.findByIdAndUpdate(
-        id,
-        { title, completed, priority },
-        { new: true }
-    );
-    res.json(updatedTask);
+
+    try {
+        const updatedTask = await Task.findByIdAndUpdate(
+            id,
+            { title, completed, priority },
+            { new: true }
+        );
+        res.json(updatedTask);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update task' });
+    }
 });
 
 app.delete(`${API_BASE_URL}/tasks/:id`, async (req, res) => {
     const { id } = req.params;
-    await Task.findByIdAndDelete(id);
-    res.status(204).send();
+
+    try {
+        await Task.findByIdAndDelete(id);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete task' });
+    }
+});
+
+// Default route for undefined paths
+app.use((req, res) => {
+    res.status(404).send("Route not found");
 });
 
 // Start server
