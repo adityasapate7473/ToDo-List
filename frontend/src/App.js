@@ -21,21 +21,32 @@ function App() {
     if (!userId) {
       userId = uuidv4(); // Generate a new unique ID
       localStorage.setItem('userId', userId);
-      
     }
   }, []);
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const userId = localStorage.getItem('userId');
-      const response = await axios.get('http://localhost:5000/tasks', {
-        params: { priority: priorityFilter, userId }, // Include userId in the query
-      });
-      setTasks(response.data);
+      try {
+        const userId = localStorage.getItem('userId');
+        const response = await axios.get('http://localhost:5000/tasks', {
+          params: { priority: priorityFilter, userId },
+        });
+        // Ensure tasks is an array
+        if (Array.isArray(response.data)) {
+          setTasks(response.data);
+        } else {
+          console.error('Unexpected API response:', response.data);
+          setTasks([]);
+        }
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+        setTasks([]); // Set an empty array on error
+      }
     };
-
+  
     fetchTasks();
   }, [priorityFilter]);
+  
 
 
 
@@ -86,39 +97,37 @@ function App() {
     setEditingTask(null);
   };
 
-  const filteredTasks = Array.isArray(tasks)
-    ? tasks.filter((task) =>
-      task.title.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    : [];
-
+  const filteredTasks = tasks.filter((task) =>
+    task.title.toLowerCase().includes((searchQuery || '').toLowerCase())
+  );
+  
 
   return (
     <div className="app-container">
       <div class="floating-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Icon 1" />
-      </div>
-      <div class="floating-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828969.png" alt="Icon 2" />
-      </div>
-      <div class="floating-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828971.png" alt="Icon 3" />
-      </div>
-      <div class="floating-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828973.png" alt="Icon 4" />
-      </div>
-      <div class="floating-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828981.png" alt="Icon 5" />
-      </div>
-      <div class="floating-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828979.png" alt="Icon 6" />
-      </div>
-      <div class="floating-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828967.png" alt="Icon 7" />
-      </div>
-      <div class="floating-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828974.png" alt="Icon 8" />
-      </div>
+  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Icon 1" />
+</div>
+<div class="floating-icon">
+  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828969.png" alt="Icon 2" />
+</div>
+<div class="floating-icon">
+  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828971.png" alt="Icon 3" />
+</div>
+<div class="floating-icon">
+  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828973.png" alt="Icon 4" />
+</div>
+<div class="floating-icon">
+  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828981.png" alt="Icon 5" />
+</div>
+<div class="floating-icon">
+  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828979.png" alt="Icon 6" />
+</div>
+<div class="floating-icon">
+  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828967.png" alt="Icon 7" />
+</div>
+<div class="floating-icon">
+  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828974.png" alt="Icon 8" />
+</div>
 
       <h1>To-Do List</h1>
 
